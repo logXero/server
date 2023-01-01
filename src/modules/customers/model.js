@@ -12,15 +12,14 @@ const UserSchema = new mongoose.Schema(
 		email: { type: String, trim: true },
 		phone: { type: String, trim: true },
 		password: { type: String, trim: true, required: true },
-		roleId: { type: mongoose.Schema.Types.ObjectId, required: true, ref:"role" },
-		departmentId: { type: mongoose.Schema.Types.ObjectId, required: true, ref:"department" },
+		roleId: { type: mongoose.Schema.Types.ObjectId, required: true },
 		tokens: [{ token: { type: String, required: true } }],
 		
 	},
 	{ timestamps: true }
 );
 
-const User = mongoose.model("user", UserSchema);
+const User = mongoose.model("User", UserSchema);
 module.exports = User;
 
 

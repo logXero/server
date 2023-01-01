@@ -9,7 +9,7 @@ const options = {
 const connectWithDatabase = async () => {
 	try {
 		await mongoose.connect(process.env.MONGO_URI, options);
-        console.log(`Connected to MongoDB Database at`, process.env.MONGO_URI)
+        console.log(`> Connected to MongoDB Database at`, process.env.MONGO_URI)
 	} catch (err) {
 		console.log("Connection Unsuccessful", err);
 		throw new Error(`Couldn't Connect to Database ${process.env.MONGO_URI}`);

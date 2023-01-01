@@ -4,18 +4,20 @@ const { getById } = require("../../core/repository");
 const User = require("./model");
 
 const checkUserExists = async (req, res) => {
-  if (req.body) {
-    const user = await getById(req.body, model);
-    if (!user) {
-      return res
-        .status(422)
-        .send({ status: "Error", message: "User does not exist" });
+  try {
+    if (req.body) {
+      const user = await getById(req.body, model);
+      if (!user) {
+        return res
+          .status(422)
+          .send({ status: "Error", message: "User does not exist" });
+      }
     }
-  }
-  return res
-    .status(200)
-    .send({ status: "Success", message: "User does not exist" });
-};
+    return res
+      .status(200)
+      .send({ status: "Success", message: "User does not exist" });
+  } catch (error) {}
+}
 
 async function getPasswordHash(password) {
   const hash = await bcrypt.hash(password, 10);
@@ -26,7 +28,7 @@ const createUser = async (user) => {
   const passwordHash = await getPasswordHash(user.password);
   const { _id } = await save({ passwordHash, ...user }, ModelName);
   return _id;
-};
+}
 
 const tryCreateUser = async (user) => {
   const { phone, email, user } = user;
@@ -39,7 +41,7 @@ const tryCreateUser = async (user) => {
   }
   const id = await createUser(user);
   return id;
-};
+}
 
 const changePassword = async (user, newPassword) => {
   const id = user._id;
@@ -52,4 +54,4 @@ const changePassword = async (user, newPassword) => {
     return model._id;
   }
   throw new NotFound(`User not found by the id: ${id}`);
-};
+}

@@ -15,6 +15,11 @@ const coreRepository = {
     const data = await model.findByIdAndUpdate({ _id: item._id }, item);
     return data;
   },
+  save: async(item, modelName)=>{
+    const model = new mongoose.models[modelName](item);
+    const savedItem = await model.save();
+    return savedItem;
+  }
 };
 
 module.exports = coreRepository;
